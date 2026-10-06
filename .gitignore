@@ -1,0 +1,4 @@
+node_modules/
+artifacts/
+.openai/*.local.*
+My Home.glb

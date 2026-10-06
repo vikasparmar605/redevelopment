@@ -1,0 +1,20 @@
+{
+  "name": "my-home-3d",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "python3 -m http.server 4173 --bind 127.0.0.1 --directory dist",
+    "test": "node verify.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Interactive browser reconstruction of a three-bedroom apartment",
+  "dependencies": {
+    "@playwright/test": "^1.63.0",
+    "esbuild": "^0.28.2",
+    "three": "^0.180.0"
+  },
+  "private": true
+}
