@@ -15,6 +15,15 @@ try{
  const mapped=await page.evaluate(()=>{const d=window.__home.development;return {buildings:d.mapped.buildings,roads:d.mapped.roads,sections:d.config.sections,floors:d.config.floors};});assert.ok(mapped.buildings>500&&mapped.roads>500);
  const layout=await page.evaluate(()=>{const d=window.__home.development,L=d.mapped.layout;const inside=(x,z,p)=>{let hit=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const a=p[i],b=p[j];if((a[1]>z)!==(b[1]>z)&&x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])hit=!hit;}return hit;};return {anchor:[d.config.latitude,d.config.longitude],site:L.site,parkExists:!!d.neighborhood.getObjectByName('Shree Duttguru Sangharsh Udhyan — open ground'),cricketExists:!!d.neighborhood.getObjectByName('Vishal’s Magic Cricket Academy ground'),treesOnGround:d.mapped.treeCenters.filter(([x,z])=>inside(x,z,L.park)).length,supplemental:d.mapped.supplementalBuildings,backRoadZ:L.backRoad[2][1],frontRoadZ:L.frontRoad[2][1]};});
  assert.deepEqual(layout.anchor,[19.216288,72.817758]);assert.ok(layout.parkExists&&layout.cricketExists);assert.equal(layout.treesOnGround,0);assert.ok(layout.frontRoadZ<layout.site.z&&layout.backRoadZ>layout.site.z);assert.ok(layout.supplemental>0);
+ const neighboring=await page.evaluate(()=>{
+  const d=window.__home.development,L=d.mapped.layout;
+  const local=(x,z)=>{const dx=x-L.site.x,dz=z-L.site.z,a=L.site.rotation;return [Math.cos(a)*dx-Math.sin(a)*dz,Math.sin(a)*dx+Math.cos(a)*dz];};
+  const bounds=Object.values(L.sideJungle),inBounds=(x,z,b)=>{const [a,c]=local(x,z);return a>=b[0]&&a<=b[1]&&c>=b[2]&&c<=b[3];};
+  const rear=d.mapped.buildingRecords.filter(b=>b.rear);
+  return {sideBuildings:d.mapped.buildingRecords.filter(b=>bounds.some(r=>inBounds(b.x,b.z,r))).length,sideTrees:bounds.map(r=>d.mapped.treeCenters.filter(([x,z])=>inBounds(x,z,r)).length),rearCount:rear.length,rearHeights:rear.map(b=>b.height),towerHeight:d.config.podiumLevels*d.config.podiumFloorHeight+d.config.floors*d.config.floorHeight};
+ });
+ assert.equal(neighboring.sideBuildings,0);assert.ok(neighboring.sideTrees.every(n=>n>50));assert.ok(neighboring.rearCount>=3);assert.ok(neighboring.rearHeights.every(h=>h>=24&&h<=36&&h<neighboring.towerHeight));
+
  await page.click('#area-overview');await page.waitForTimeout(1100);await capture('corrected-area-layout');await page.click('#building-overview');
  assert.equal(await page.evaluate(()=>window.__home.house.visible),false);assert.ok(await page.locator('#my-apartment').isVisible());await capture('overview');
  await page.click('[data-light="evening"]');assert.ok(await page.evaluate(()=>window.__home.evening));await capture('evening');await page.click('[data-light="day"]');
@@ -47,5 +56,5 @@ try{
  // Standalone model must work with network requests blocked.
  await page.route('http://**/*',r=>r.abort());await page.route('https://**/*',r=>r.abort());await page.goto('file:///home/vikas/3dhouse/My%20Home%203D.html',{waitUntil:'domcontentloaded',timeout:60000});await page.waitForFunction(()=>!!window.__home,null,{timeout:90000});await scopeIs('building');await page.click('#my-apartment');await scopeIs('apartment');
  assert.deepEqual(errors,[]);assert.deepEqual(externalRequests,[]);
- const result={passed:true,mapped,correctedLayout:layout,entryRoutes:3,standaloneOffline:true,errors,externalRequests};await writeFile('artifacts/building/results.json',JSON.stringify(result,null,2));console.log(result);
+ const result={passed:true,mapped,correctedLayout:layout,neighboring,entryRoutes:3,standaloneOffline:true,errors,externalRequests};await writeFile('artifacts/building/results.json',JSON.stringify(result,null,2));console.log(result);
 }finally{await browser.close();}

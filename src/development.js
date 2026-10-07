@@ -159,13 +159,20 @@ function buildNeighborhood(parent){
   const inside=(x,z,p)=>{let result=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const a=p[i],b=p[j];if((a[1]>z)!==(b[1]>z)&&x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])result=!result;}return result;};
   const siteLocal=(x,z)=>{const dx=x-localLayout.site.x,dz=z-localLayout.site.z,a=localLayout.site.rotation;return [Math.cos(a)*dx-Math.sin(a)*dz,Math.sin(a)*dx+Math.cos(a)*dz];};
   const inSite=(x,z)=>{const [a,b]=siteLocal(x,z);return Math.abs(a)<74&&b>-27&&b<21;};
-  const occupied=[],roadSegments=[],waterPolygons=[],greenPolygons=[];
+  const sideBounds=Object.values(localLayout.sideJungle);
+  const inSideJungle=(x,z)=>{const [a,b]=siteLocal(x,z);return sideBounds.some(([x1,x2,z1,z2])=>a>=x1&&a<=x2&&b>=z1&&b<=z2);};
+  const worldPoint=(x,z)=>{const a=localLayout.site.rotation;return [localLayout.site.x+Math.cos(a)*x+Math.sin(a)*z,localLayout.site.z-Math.sin(a)*x+Math.cos(a)*z];};
+  const rearBlock=(x,z)=>{const [a,b]=siteLocal(x,z);return Math.abs(a)<210&&b>=21&&b<85;};
+  const occupied=[],roadSegments=[],waterPolygons=[],greenPolygons=[],buildingRecords=[];
   const wallColors=['#d6cdb9','#c8c3b3','#c9c5b9','#b9b7aa','#d4cab7'];const roofColors=['#967f71','#b0aaa0','#8a8f91','#9d7b66','#798f9b'];
   const wallMats=wallColors.map(c=>paint(c)),roofMats=roofColors.map(c=>paint(c));
   const geometryBuckets=new Map();let footprints=0,roadCount=0,areas=0,supplemental=0;
   function queue(m,mat,distant=false){m.updateMatrix();m.geometry.applyMatrix4(m.matrix);const key=`${mat.uuid}:${distant}`;if(!geometryBuckets.has(key))geometryBuckets.set(key,{material:mat,distant,geos:[]});geometryBuckets.get(key).geos.push(m.geometry);}
   function buildingFootprint(p,height,seed,detailed=false,name=''){
     const cx=p.reduce((s,v)=>s+v[0],0)/p.length,cz=p.reduce((s,v)=>s+v[1],0)/p.length;
+    if(inSideJungle(cx,cz))return false;
+    if(rearBlock(cx,cz))height=Math.min(localLayout.neighboringBuildings.maximumFloors*3,Math.max(height,(localLayout.neighboringBuildings.minimumFloors+seed%3)*3));
+    buildingRecords.push({x:cx,z:cz,height,name,rear:rearBlock(cx,cz)});
     const distant=Math.hypot(cx,cz)>650,mat=wallMats[seed%wallMats.length],roof=roofMats[seed%roofMats.length];
     queue(polygon(p,mat,0,height),mat,distant);queue(polygon(p,roof,height+.02),roof,distant);
     occupied.push({x1:Math.min(...p.map(v=>v[0]))-1,x2:Math.max(...p.map(v=>v[0]))+1,z1:Math.min(...p.map(v=>v[1]))-1,z2:Math.max(...p.map(v=>v[1]))+1});
@@ -175,11 +182,12 @@ function buildNeighborhood(parent){
       if(height>13)for(let f=1;f<height/3;f++)urbanBatch.add(mat,(a[0]+b[0])/2,f*3-.22,(a[1]+b[1])/2,length,.16,.48,null,rot);
     }
     if(detailed){urbanBatch.add(roof,cx,height+.9,cz,1.7,1.7,1.7);urbanBatch.add(mat,cx+2.4,height+.35,cz,2.5,.7,2.8);}
+    return true;
   }
-  function road(points,width,marking=false){
+  function road(points,width,marking=false,internal=false){
     for(let i=1;i<points.length;i++){
       const [a,b]=[points[i-1],points[i]],dx=b[0]-a[0],dz=b[1]-a[1],length=Math.hypot(dx,dz),x=(a[0]+b[0])/2,z=(a[1]+b[1])/2,rot=-Math.atan2(dz,dx);if(length<.1)continue;
-      roadSegments.push({a,b,width});if(inSite(x,z))continue;
+      if(internal&&inSideJungle(x,z))continue;roadSegments.push({a,b,width});if(inSite(x,z))continue;
       roadBatch.add(footpath,x,-.06,z,length+.3,.1,width+1.6,null,rot);roadBatch.add(asphalt,x,.014,z,length+.1,.05,width,null,rot);
       if(marking)for(let t=2;t<length;t+=7)roadBatch.add(dryGrass,a[0]+dx*t/length,.05,a[1]+dz*t/length,3,.02,.10,null,rot);
     }
@@ -192,11 +200,11 @@ function buildNeighborhood(parent){
       const wet=t.natural==='water'||t.water,green=['wood','wetland','scrub','grassland'].includes(t.natural)||t.landuse==='forest';
       if(wet||green){near.add(polygon(p,wet?water:mangrove,wet?-.08:-.16));(wet?waterPolygons:greenPolygons).push(p);areas++;}
     }
-    if(t.highway){const widths={primary:17,secondary:12,tertiary:9,residential:5.5,service:3.2,footway:1.4,path:1.2};road(p,parseFloat(t.width)||widths[t.highway]||4,t.highway==='tertiary');roadCount++;}
+    if(t.highway){const widths={primary:17,secondary:12,tertiary:9,residential:5.5,service:3.2,footway:1.4,path:1.2};road(p,parseFloat(t.width)||widths[t.highway]||4,t.highway==='tertiary',['service','footway','path'].includes(t.highway));roadCount++;}
     if(t.building&&p.length>=4){
-      const cx=p.reduce((s,v)=>s+v[0],0)/p.length,cz=p.reduce((s,v)=>s+v[1],0)/p.length;if(inSite(cx,cz)||Math.hypot(cx,cz)>1250)continue;
+      const cx=p.reduce((s,v)=>s+v[0],0)/p.length,cz=p.reduce((s,v)=>s+v[1],0)/p.length;if(inSite(cx,cz)||inSideJungle(cx,cz)||Math.hypot(cx,cz)>1250)continue;
       if(inside(cx,cz,localLayout.park)&&Math.hypot(cx-localLayout.hall[0],cz-localLayout.hall[1])>14)continue;
-      // Roof heights close to the site follow the visible low-rise / mid-rise pattern.
+      // Rear neighbors are apartment blocks, kept well below the redevelopment tower.
       const close=Math.hypot(cx,cz)<350;
       const height=Math.max(3,Math.min(110,parseFloat(t.height)||(parseFloat(t['building:levels'])||(close?((f.id%3)+2):(f.id%5+2)))*3));
       buildingFootprint(p,height,f.id,Math.hypot(cx,cz)<450,t.name);footprints++;
@@ -222,16 +230,17 @@ function buildNeighborhood(parent){
   const rect=(x,z,w,d,a=.108)=>{const c=Math.cos(a),s=Math.sin(a);return [[-w/2,-d/2],[w/2,-d/2],[w/2,d/2],[-w/2,d/2],[-w/2,-d/2]].map(([u,v])=>[x+c*u+s*v,z-s*u+c*v]);};
   const isOccupied=(x,z,pad=0)=>occupied.some(b=>x>b.x1-pad&&x<b.x2+pad&&z>b.z1-pad&&z<b.z2+pad);
   for(let i=0;i<rear.length;i++){const b=rear[i];if(!isOccupied(b.x,b.z,2)){buildingFootprint(rect(b.x,b.z,b.w,b.d),b.h,20+i,true,b.name);supplemental++;}}
-  // Fine-grained house clusters at both ends of the redevelopment; varied sheet and tiled roofs.
+  // Supplement missing rear apartment blocks, preserving jungle on both sides.
   for(let i=0;i<260;i++){
     const x=-131+random(i+131)*345,z=24+random(i+583)*59;
-    if(inSite(x,z)||inside(x,z,localLayout.park)||isOccupied(x,z,3))continue;
+    if(inSite(x,z)||inSideJungle(x,z)||!rearBlock(x,z)||inside(x,z,localLayout.park)||isOccupied(x,z,3))continue;
     if(roadSegments.some(r=>distanceToSegment(x,z,r.a,r.b)<r.width/2+2.5))continue;
-    const w=4+random(i+788)*5,d=5+random(i+1020)*6,h=3+Math.floor(random(i+1377)*2)*2.6;
+    const w=11+random(i+788)*6,d=10+random(i+1020)*5,h=(8+i%3)*3;
     buildingFootprint(rect(x,z,w,d),h,100+i,true);supplemental++;
   }
   // Sidewalk trees and dense mangrove patches, with the cricket ground kept open.
-  const patches=[localLayout.westernTrees,localLayout.northernTrees,localLayout.southernTrees,localLayout.easternTrees];
+  const sidePatches=sideBounds.map(([x1,x2,z1,z2])=>[[x1,z1],[x2,z1],[x2,z2],[x1,z2]].map(([x,z])=>worldPoint(x,z)));
+  const patches=[localLayout.westernTrees,localLayout.northernTrees,localLayout.southernTrees,localLayout.easternTrees,...sidePatches];
   for(const p of patches)near.add(polygon(p,mangrove,-.10));
   const treePositions=[];const trunk=paint('#5c5840'),crownMaterial=paint('#ffffff',{roughness:1});
   for(let i=0;i<42000;i++){
@@ -240,6 +249,15 @@ function buildNeighborhood(parent){
     if(inSite(x,z)||inside(x,z,localLayout.park)||isOccupied(x,z,2)||waterPolygons.some(p=>inside(x,z,p)))continue;
     if(roadSegments.some(r=>distanceToSegment(x,z,r.a,r.b)<r.width/2+2.4))continue;
     const h=4+random(i+43222)*5.6;treePositions.push({x,z,h});treeBatch.add(trunk,x,h*.43,z,.23,h*.86,.23);
+  }
+  for(let k=0;k<sideBounds.length;k++){
+    const [x1,x2,z1,z2]=sideBounds[k];
+    for(let x=x1+3;x<x2-2;x+=5.2)for(let z=z1+3;z<z2-2;z+=5.2){
+      const seed=Math.round(x*7+z*11)+10000+k*1000;
+      const [wx,wz]=worldPoint(x+(random(seed)-.5)*2,z+(random(seed+1)-.5)*2);
+      if(inSite(wx,wz)||inside(wx,wz,localLayout.park)||isOccupied(wx,wz,2)||waterPolygons.some(p=>inside(wx,wz,p))||roadSegments.some(r=>distanceToSegment(wx,wz,r.a,r.b)<r.width/2+2))continue;
+      const h=5.4+random(seed+2)*4;treePositions.push({x:wx,z:wz,h});treeBatch.add(trunk,wx,h*.43,wz,.24,h*.86,.24);
+    }
   }
   // Shade trees at the park boundary; none obstruct the open playing area.
   for(let i=0;i<42;i++){const x=-24+i*4,z=13-x*.102;const h=5.2+random(i+11811)*2.5;treePositions.push({x,z,h});treeBatch.add(trunk,x,h*.43,z,.24,h*.86,.24);}
@@ -257,7 +275,7 @@ function buildNeighborhood(parent){
   for(const {material,distant,geos}of geometryBuckets.values()){if(!geos.length)continue;const m=new THREE.Mesh(mergeGeometries(geos,false),material);m.castShadow=m.receiveShadow=true;(distant?far:near).add(m);geos.forEach(g=>g.dispose());}
   const landmarkGroup=new THREE.Group();landmarkGroup.name='Local landmarks';near.add(landmarkGroup);
   for(const b of localLayout.landmarks){const c=document.createElement('canvas');c.width=1024;c.height=100;const ctx=c.getContext('2d');ctx.fillStyle='#f8f4e8ed';ctx.fillRect(0,0,1024,100);ctx.font='500 34px sans-serif';ctx.fillStyle='#3d5342';ctx.textAlign='center';ctx.fillText(b.name,512,63);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:t,depthTest:false,transparent:true}));sp.position.set(b.x,b.z>40?26:8,b.z);sp.scale.set(b.name.length*.46,2.2,1);sp.userData.viewerHelper=true;landmarkGroup.add(sp);}
-  return {roads:roadCount,buildings:footprints,supplementalBuildings:supplemental,landAreas:areas,source:location.source,timestamp:location.osmTimestamp,near,far,landmarks:landmarkGroup,estimatedLandscape:true,layout:localLayout,trees:treePositions.length,treeCenters:treePositions.map(({x,z})=>[x,z])};
+  return {roads:roadCount,buildings:footprints,supplementalBuildings:supplemental,landAreas:areas,source:location.source,timestamp:location.osmTimestamp,near,far,landmarks:landmarkGroup,estimatedLandscape:true,layout:localLayout,buildingRecords,sideJungle:sidePatches,trees:treePositions.length,treeCenters:treePositions.map(({x,z})=>[x,z])};
 }
 function distanceToSegment(x,z,a,b){const dx=b[0]-a[0],dz=b[1]-a[1],length=dx*dx+dz*dz;if(length===0)return Math.hypot(x-a[0],z-a[1]);const t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dz)/length));return Math.hypot(x-a[0]-t*dx,z-a[1]-t*dz);}
 

@@ -5,3 +5,6 @@ My Home.glb
 inspect-photo.mjs
 inspect-photo-128.mjs
 render-sanity.mjs
+
+# Generated offline bundle; recreated by npm run build.
+My Home 3D.html

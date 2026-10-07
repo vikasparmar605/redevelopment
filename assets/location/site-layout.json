@@ -1,25 +1,308 @@
 {
-  "anchor": [19.216288, 72.817758],
-  "note": "Local layout corrected against user Google Maps screenshot and a satellite reference. Unmapped house footprints, tree positions, heights, and project placement are estimated.",
-  "site": {"x": 5, "z": 46, "rotation": 0.108},
-  "park": [[-31.6,-75.5],[-8.4,-72.2],[8.4,-66.3],[31.9,-58.1],[73.1,-58.1],[105.8,-62.9],[126.3,-50.9],[141,-27.5],[149.2,-3.7],[-23.9,14]],
-  "cricketGround": [[30,-54],[104,-57],[121,-41],[138,-8],[35,3]],
-  "frontRoad": [[-144,36],[-124,30.6],[37.5,13.1],[237,-8.8]],
-  "backRoad": [[-178,123],[-98.7,114.5],[3,103.5],[105.4,93.3],[247.3,78.6]],
-  "westernTrees": [[-450,-260],[-105,-255],[-34,-82],[-33,12],[-132,28],[-141,76],[-240,97],[-450,130]],
-  "northernTrees": [[-410,-430],[270,-430],[290,-210],[219,-155],[135,-151],[14,-143],[-35,-99],[-110,-156],[-350,-140]],
-  "southernTrees": [[-480,167],[-174,142],[3,123],[108,111],[265,96],[455,110],[530,430],[-530,470]],
-  "easternTrees": [[160,-2],[237,-11],[242,32],[153,43]],
-  "gazebo": [-15,-6],
-  "hall": [-45,0],
+  "anchor": [
+    19.216288,
+    72.817758
+  ],
+  "note": "Local layout follows user reference. Neighboring structures behind the site are smaller apartment blocks; both sides of the redevelopment are jungle with no houses. Heights and precise boundaries remain illustrative.",
+  "site": {
+    "x": 5,
+    "z": 46,
+    "rotation": 0.108
+  },
+  "park": [
+    [
+      -31.6,
+      -75.5
+    ],
+    [
+      -8.4,
+      -72.2
+    ],
+    [
+      8.4,
+      -66.3
+    ],
+    [
+      31.9,
+      -58.1
+    ],
+    [
+      73.1,
+      -58.1
+    ],
+    [
+      105.8,
+      -62.9
+    ],
+    [
+      126.3,
+      -50.9
+    ],
+    [
+      141,
+      -27.5
+    ],
+    [
+      149.2,
+      -3.7
+    ],
+    [
+      -23.9,
+      14
+    ]
+  ],
+  "cricketGround": [
+    [
+      30,
+      -54
+    ],
+    [
+      104,
+      -57
+    ],
+    [
+      121,
+      -41
+    ],
+    [
+      138,
+      -8
+    ],
+    [
+      35,
+      3
+    ]
+  ],
+  "frontRoad": [
+    [
+      -144,
+      36
+    ],
+    [
+      -124,
+      30.6
+    ],
+    [
+      37.5,
+      13.1
+    ],
+    [
+      237,
+      -8.8
+    ]
+  ],
+  "backRoad": [
+    [
+      -178,
+      123
+    ],
+    [
+      -98.7,
+      114.5
+    ],
+    [
+      3,
+      103.5
+    ],
+    [
+      105.4,
+      93.3
+    ],
+    [
+      247.3,
+      78.6
+    ]
+  ],
+  "westernTrees": [
+    [
+      -450,
+      -260
+    ],
+    [
+      -105,
+      -255
+    ],
+    [
+      -34,
+      -82
+    ],
+    [
+      -33,
+      12
+    ],
+    [
+      -132,
+      28
+    ],
+    [
+      -141,
+      76
+    ],
+    [
+      -240,
+      97
+    ],
+    [
+      -450,
+      130
+    ]
+  ],
+  "northernTrees": [
+    [
+      -410,
+      -430
+    ],
+    [
+      270,
+      -430
+    ],
+    [
+      290,
+      -210
+    ],
+    [
+      219,
+      -155
+    ],
+    [
+      135,
+      -151
+    ],
+    [
+      14,
+      -143
+    ],
+    [
+      -35,
+      -99
+    ],
+    [
+      -110,
+      -156
+    ],
+    [
+      -350,
+      -140
+    ]
+  ],
+  "southernTrees": [
+    [
+      -480,
+      167
+    ],
+    [
+      -174,
+      142
+    ],
+    [
+      3,
+      123
+    ],
+    [
+      108,
+      111
+    ],
+    [
+      265,
+      96
+    ],
+    [
+      455,
+      110
+    ],
+    [
+      530,
+      430
+    ],
+    [
+      -530,
+      470
+    ]
+  ],
+  "easternTrees": [
+    [
+      160,
+      -2
+    ],
+    [
+      237,
+      -11
+    ],
+    [
+      242,
+      32
+    ],
+    [
+      153,
+      43
+    ]
+  ],
+  "gazebo": [
+    -15,
+    -6
+  ],
+  "hall": [
+    -45,
+    0
+  ],
   "landmarks": [
-    {"name":"Shree Duttguru Sangharsh Udhyan","x":5,"z":-36},
-    {"name":"Vishal’s Magic Cricket Academy","x":87,"z":-24},
-    {"name":"Shri Duttguru Sangharsh Samaj Mandir Hall","x":-45,"z":0},
-    {"name":"Ruby Tower","x":-51,"z":79},
-    {"name":"Yoshodhan Society","x":8,"z":75},
-    {"name":"Silver Sea View","x":68,"z":65},
-    {"name":"Sea Crown","x":175,"z":59},
-    {"name":"Boraspada Rd · RSC Rd Number 25","x":25,"z":111}
-  ]
+    {
+      "name": "Shree Duttguru Sangharsh Udhyan",
+      "x": 5,
+      "z": -36
+    },
+    {
+      "name": "Vishal\u2019s Magic Cricket Academy",
+      "x": 87,
+      "z": -24
+    },
+    {
+      "name": "Shri Duttguru Sangharsh Samaj Mandir Hall",
+      "x": -45,
+      "z": 0
+    },
+    {
+      "name": "Ruby Tower",
+      "x": -51,
+      "z": 79
+    },
+    {
+      "name": "Yoshodhan Society",
+      "x": 8,
+      "z": 75
+    },
+    {
+      "name": "Silver Sea View",
+      "x": 68,
+      "z": 65
+    },
+    {
+      "name": "Sea Crown",
+      "x": 175,
+      "z": 59
+    },
+    {
+      "name": "Boraspada Rd \u00b7 RSC Rd Number 25",
+      "x": 25,
+      "z": 111
+    }
+  ],
+  "sideJungle": {
+    "west": [
+      -175,
+      -74,
+      -27,
+      21
+    ],
+    "east": [
+      74,
+      235,
+      -27,
+      21
+    ]
+  },
+  "neighboringBuildings": {
+    "minimumFloors": 8,
+    "maximumFloors": 12
+  }
 }
