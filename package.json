@@ -5,7 +5,10 @@
   "scripts": {
     "build": "node build.mjs",
     "start": "python3 -m http.server 4173 --bind 127.0.0.1 --directory dist",
-    "test": "node verify.mjs"
+    "test": "node verify-realism.mjs",
+    "capture:review": "node capture-realism.mjs",
+    "capture:photo": "node capture-photo.mjs",
+    "test:building": "node verify-building.mjs"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +17,11 @@
   "dependencies": {
     "@playwright/test": "^1.63.0",
     "esbuild": "^0.28.2",
-    "three": "^0.180.0"
+    "three": "0.180.0",
+    "three-gpu-pathtracer": "0.0.24",
+    "three-mesh-bvh": "0.9.5",
+    "xatlas-web": "0.1.0"
   },
-  "private": true
+  "private": true,
+  "type": "module"
 }

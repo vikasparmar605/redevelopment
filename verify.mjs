@@ -1,26 +1,2 @@
-import { chromium } from '@playwright/test';
-import { mkdir,readFile,writeFile } from 'node:fs/promises';
-import assert from 'node:assert/strict';
-const browser=await chromium.launch({headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
-const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
-const errors=[];page.on('pageerror',e=>errors.push(e.message));
-await page.goto('http://127.0.0.1:4173');await page.waitForFunction(()=>!!window.__home);await page.waitForSelector('#loading',{state:'detached'});
-await mkdir('artifacts',{recursive:true});await page.screenshot({path:'artifacts/overview.png'});
-assert.equal(await page.locator('.room-btn').count(),7);
-const geometry=await page.evaluate(()=>({meshes:window.__home.renderer.info.render.calls,rooms:window.__home.rooms.length,walkable:window.__home.walkable.length}));assert.ok(geometry.meshes>100);
-await page.click('[data-view="plan"]');await page.waitForTimeout(1200);assert.equal(await page.evaluate(()=>window.__home.mode),'plan');await page.screenshot({path:'artifacts/top-view.png'});
-await page.click('[data-room="master"]');await page.waitForTimeout(1100);assert.equal(await page.evaluate(()=>window.__home.selected),'master');
-await page.click('[data-view="walk"]');await page.waitForTimeout(300);assert.equal(await page.evaluate(()=>window.__home.mode),'walk');assert.equal(await page.evaluate(()=>window.__home.wallHeight),2.8);await page.screenshot({path:'artifacts/walk.png'});
-const before=await page.evaluate(()=>window.__home.camera.position.toArray());await page.keyboard.down('w');await page.waitForTimeout(500);await page.keyboard.up('w');const after=await page.evaluate(()=>window.__home.camera.position.toArray());assert.ok(Math.hypot(after[0]-before[0],after[2]-before[2])>.1);
-await page.keyboard.press('Escape');await page.waitForTimeout(1100);assert.equal(await page.evaluate(()=>window.__home.mode),'dollhouse');assert.equal(await page.evaluate(()=>window.__home.wallHeight),.75);
-await page.locator('#wall-height').fill('1.5');assert.equal(await page.evaluate(()=>window.__home.wallHeight),1.5);await page.locator('#wall-height').fill('0.75');
-await page.uncheck('#furniture');assert.equal(await page.evaluate(()=>window.__home.furnitureVisible),false);await page.check('#furniture');await page.check('#dimensions');await page.uncheck('#dimensions');
-await page.click('[data-light="evening"]');await page.waitForTimeout(500);await page.screenshot({path:'artifacts/evening.png'});await page.click('[data-light="day"]');
-await page.click('#reference-btn');assert.ok(await page.locator('#reference').isVisible());await page.click('[data-ref="interior"]');await page.click('#close-reference');
-const dlPromise=page.waitForEvent('download');await page.click('#download-model');const dl=await dlPromise;await dl.saveAs('artifacts/my-home.glb');const glb=await readFile('artifacts/my-home.glb');assert.equal(glb.subarray(0,4).toString(),'glTF');assert.ok(glb.length>100000);const jsonLength=glb.readUInt32LE(12);const model=JSON.parse(glb.subarray(20,20+jsonLength).toString());assert.ok(model.meshes.length>100);
-const pngPromise=page.waitForEvent('download');await page.click('#snapshot');const png=await pngPromise;assert.equal(png.suggestedFilename(),'my-home-3d.png');
-await page.click('#tour');await page.waitForTimeout(4500);assert.equal(await page.evaluate(()=>window.__home.selected),'kitchen');await page.click('#tour');await page.click('#reset');
-await page.setViewportSize({width:390,height:844});await page.waitForTimeout(600);await page.screenshot({path:'artifacts/mobile.png'});assert.ok(await page.locator('#settings-open').isVisible());await page.click('#settings-open');assert.ok(await page.locator('#settings').isVisible());await page.click('#settings-close');
-// The deliverable works from file:// with no external scripts or textures.
-await page.goto('file:///home/vikas/3dhouse/My%20Home%203D.html');await page.waitForFunction(()=>!!window.__home);await page.waitForSelector('#loading',{state:'detached'});assert.equal(await page.evaluate(()=>window.__home.rooms.length),7);
-assert.deepEqual(errors,[]);console.log(JSON.stringify({passed:true,geometry,exportBytes:glb.length,exportMeshes:model.meshes.length,pageErrors:errors,screenshots:'artifacts/'},null,2));await browser.close();
+// Compatibility entrypoint for the current browser verification suite.
+import './verify-realism.mjs';

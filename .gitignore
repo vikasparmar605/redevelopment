@@ -2,3 +2,6 @@ node_modules/
 artifacts/
 .openai/*.local.*
 My Home.glb
+inspect-photo.mjs
+inspect-photo-128.mjs
+render-sanity.mjs

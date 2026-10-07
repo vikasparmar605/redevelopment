@@ -1,0 +1,245 @@
+[
+  {
+    "asset": "oak_veneer_01",
+    "file": "oak_veneer_01_diff_2k.jpg",
+    "channel": "Diffuse",
+    "resolution": "2k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/oak_veneer_01/oak_veneer_01_diff_2k.jpg",
+    "md5": "0ad13b8daf8dc00318a437f56e54c484",
+    "derived": false
+  },
+  {
+    "asset": "oak_veneer_01",
+    "file": "oak_veneer_01_nor_gl_1k.jpg",
+    "channel": "nor_gl",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_nor_gl_1k.jpg",
+    "md5": "d05406f5fdaf51f0d7b115b35d9af1b7",
+    "derived": false
+  },
+  {
+    "asset": "oak_veneer_01",
+    "file": "oak_veneer_01_rough_1k.jpg",
+    "channel": "Rough",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_rough_1k.jpg",
+    "md5": "a19b44176a078b9ae93314133848c9aa",
+    "derived": false
+  },
+  {
+    "asset": "laminate_floor_02",
+    "file": "laminate_floor_02_diff_2k.jpg",
+    "channel": "Diffuse",
+    "resolution": "2k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/laminate_floor_02/laminate_floor_02_diff_2k.jpg",
+    "md5": "e106d121c9abb78f80e72cb5bd003295",
+    "derived": false
+  },
+  {
+    "asset": "laminate_floor_02",
+    "file": "laminate_floor_02_nor_gl_1k.jpg",
+    "channel": "nor_gl",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/laminate_floor_02/laminate_floor_02_nor_gl_1k.jpg",
+    "md5": "40f4b1e4a5cafbd3bd1b02e8367cf3b1",
+    "derived": false
+  },
+  {
+    "asset": "laminate_floor_02",
+    "file": "laminate_floor_02_rough_1k.jpg",
+    "channel": "Rough",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/laminate_floor_02/laminate_floor_02_rough_1k.jpg",
+    "md5": "6ef14a4d438a44103689739248ef50b7",
+    "derived": false
+  },
+  {
+    "asset": "rough_linen",
+    "file": "rough_linen_diff_1k.jpg",
+    "channel": "Diffuse",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rough_linen/rough_linen_diff_1k.jpg",
+    "md5": "663db789fb075462b685c1f740e58930",
+    "derived": false
+  },
+  {
+    "asset": "rough_linen",
+    "file": "rough_linen_nor_gl_1k.jpg",
+    "channel": "nor_gl",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rough_linen/rough_linen_nor_gl_1k.jpg",
+    "md5": "3350269a2e9c472aa406bd3cc1eaf2c8",
+    "derived": false
+  },
+  {
+    "asset": "rough_linen",
+    "file": "rough_linen_rough_1k.jpg",
+    "channel": "Rough",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rough_linen/rough_linen_rough_1k.jpg",
+    "md5": "a380b24cc43cff88c39510305ebf0020",
+    "derived": false
+  },
+  {
+    "asset": "poly_wool_herringbone",
+    "file": "poly_wool_herringbone_diff_1k.jpg",
+    "channel": "Diffuse",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/poly_wool_herringbone/poly_wool_herringbone_diff_1k.jpg",
+    "md5": "5c0981092ba0129d5951720ea23d50c2",
+    "derived": false
+  },
+  {
+    "asset": "poly_wool_herringbone",
+    "file": "poly_wool_herringbone_nor_gl_1k.jpg",
+    "channel": "nor_gl",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/poly_wool_herringbone/poly_wool_herringbone_nor_gl_1k.jpg",
+    "md5": "a6371d03b033a1c20e1c2758136ac757",
+    "derived": false
+  },
+  {
+    "asset": "poly_wool_herringbone",
+    "file": "poly_wool_herringbone_rough_1k.jpg",
+    "channel": "Rough",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/poly_wool_herringbone/poly_wool_herringbone_rough_1k.jpg",
+    "md5": "9f85f667517ee9c7f3cc85214058a7d8",
+    "derived": false
+  },
+  {
+    "asset": "white_plaster_02",
+    "file": "white_plaster_02_nor_gl_1k.jpg",
+    "channel": "nor_gl",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_nor_gl_1k.jpg",
+    "md5": "55fc03203ebf1dc703a380fde93ff502",
+    "derived": false
+  },
+  {
+    "asset": "white_plaster_02",
+    "file": "white_plaster_02_rough_1k.jpg",
+    "channel": "Rough",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_rough_1k.jpg",
+    "md5": "8b28f263360b8c4ddbdc4f7c650c4eeb",
+    "derived": false
+  },
+  {
+    "asset": "marble_01",
+    "file": "marble_01_diff_1k.jpg",
+    "channel": "Diffuse",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/marble_01/marble_01_diff_1k.jpg",
+    "md5": "04325ced5018eb8a2e598a4ef69cb176",
+    "derived": false
+  },
+  {
+    "asset": "marble_01",
+    "file": "marble_01_nor_gl_1k.jpg",
+    "channel": "nor_gl",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/marble_01/marble_01_nor_gl_1k.jpg",
+    "md5": "fa073d722cde733c1bd6cc6e8897c8e3",
+    "derived": false
+  },
+  {
+    "asset": "marble_01",
+    "file": "marble_01_rough_1k.jpg",
+    "channel": "Rough",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/marble_01/marble_01_rough_1k.jpg",
+    "md5": "59cef1be1b7376c9d0dcc7a64adf7882",
+    "derived": false
+  },
+  {
+    "asset": "large_floor_tiles_02",
+    "file": "large_floor_tiles_02_diff_1k.jpg",
+    "channel": "Diffuse",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/large_floor_tiles_02/large_floor_tiles_02_diff_1k.jpg",
+    "md5": "929f604bfe0f38041afdcf4676a9f777",
+    "derived": false
+  },
+  {
+    "asset": "large_floor_tiles_02",
+    "file": "large_floor_tiles_02_nor_gl_1k.jpg",
+    "channel": "nor_gl",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/large_floor_tiles_02/large_floor_tiles_02_nor_gl_1k.jpg",
+    "md5": "3e7cb144a9928dcc8edc336614814d45",
+    "derived": false
+  },
+  {
+    "asset": "large_floor_tiles_02",
+    "file": "large_floor_tiles_02_rough_1k.jpg",
+    "channel": "Rough",
+    "resolution": "1k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/large_floor_tiles_02/large_floor_tiles_02_rough_1k.jpg",
+    "md5": "543d5f2cb129ac96ccc76f2c427c622e",
+    "derived": false
+  },
+  {
+    "asset": "kloofendal_48d_partly_cloudy",
+    "file": "kloofendal_48d_partly_cloudy_2k.hdr",
+    "channel": "HDRI",
+    "resolution": "2k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_2k.hdr",
+    "md5": "72b472b131798b3eb5fc67fce3ab672e",
+    "derived": false
+  },
+  {
+    "asset": "rough_linen",
+    "file": "rough_linen_ivory_diff_1k.jpg",
+    "channel": "Diffuse (neutral ivory dye)",
+    "resolution": "1k",
+    "url": "https://polyhaven.com/a/rough_linen",
+    "md5": "0c829ada7faaf37aa9b53e5eadaea7ac",
+    "derived": true
+  },
+  {
+    "asset": "marble_01",
+    "file": "marble_01_ivory_diff_1k.jpg",
+    "channel": "Diffuse (pale warm stone)",
+    "resolution": "1k",
+    "url": "https://polyhaven.com/a/marble_01",
+    "md5": "0aa40415454f2a8dda43db0b86b28ec8",
+    "derived": true
+  },
+  {
+    "asset": "laminate_floor_02",
+    "file": "laminate_floor_02_honed_rough_1k.jpg",
+    "channel": "Roughness (honed / oiled finish)",
+    "resolution": "1k",
+    "url": "https://polyhaven.com/a/laminate_floor_02",
+    "md5": "f3bd7ee741d5b176eaca374aa37aa31d",
+    "derived": true
+  },
+  {
+    "asset": "marble_01",
+    "file": "marble_01_honed_rough_1k.jpg",
+    "channel": "Roughness (honed / oiled finish)",
+    "resolution": "1k",
+    "url": "https://polyhaven.com/a/marble_01",
+    "md5": "2192a2ef5e58bef495ff8087a32e45ce",
+    "derived": true
+  },
+  {
+    "asset": "poly_wool_herringbone",
+    "file": "poly_wool_herringbone_ivory_diff_1k.jpg",
+    "channel": "Diffuse (neutral oatmeal dye)",
+    "resolution": "1k",
+    "url": "https://polyhaven.com/a/poly_wool_herringbone",
+    "md5": "fed91c5741d36678ae5d15e7bfda1d15",
+    "derived": true
+  },
+  {
+    "asset": "residential_garden",
+    "file": "residential_garden_2k.hdr",
+    "channel": "HDRI",
+    "resolution": "2k",
+    "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/residential_garden_2k.hdr",
+    "md5": "4cdc3dae87b78203628914b49045c701",
+    "derived": false
+  }
+]
